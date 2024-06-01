@@ -1,6 +1,53 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+
+const data = [
+  {
+    id: 1,
+    title: "Exercise",
+    tasks: 12,
+    categoryImage: require("./assets/images/exercise.png"),
+  },
+  {
+    id: 2,
+    title: "Study",
+    tasks: 12,
+    categoryImage: require("./assets/images/learning.png"),
+  },
+  {
+    id: 3,
+    title: "Relax",
+    tasks: 8,
+    categoryImage: require("./assets/images/learning.png"),
+  },
+  {
+    id: 4,
+    title: "Walk",
+    tasks: 2,
+    categoryImage: require("./assets/images/learning.png"),
+  },
+  {
+    id: 5,
+    title: "Read",
+    tasks: 5,
+    categoryImage: require("./assets/images/learning.png"),
+  },
+  {
+    id: 6,
+    title: "Swim",
+    tasks: 1,
+    categoryImage: require("./assets/images/learning.png"),
+  },
+];
+
+const Category = ({ title, taskNumber, categoryImage }) => (
+  <View style={styles.categoryContainer}>
+    <Image source={categoryImage} style={styles.categoryImage} />
+    <Text style={styles.categoryTitle}>{title}</Text>
+    <Text style={styles.categoryTaskNumber}>{taskNumber} tasks</Text>
+  </View>
+);
 
 export default function App() {
   const [searchText, setSearchText] = useState('');
@@ -36,6 +83,25 @@ export default function App() {
           />
         </TouchableOpacity>
       </View>
+      <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 40 }}>
+        Categories
+      </Text>
+      <FlatList
+        data={data}
+        renderItem={({ item }) => (
+          <Category
+            title={item.title}
+            taskNumber={item.tasks}
+            categoryImage={item.categoryImage}
+          />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ paddingRight: 16 }}
+      />
+      {/* Sliding container with specified styles */}
+      <View style={styles.slidingContainer}></View>
     </View>
   );
 }
@@ -44,7 +110,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E8D1BA',
-    paddingTop: 50, 
+    paddingTop: 50,
     paddingHorizontal: 20,
   },
   headerRow: {
@@ -60,9 +126,8 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 56,
     height: 56,
-    borderRadius: 28, 
+    borderRadius: 28,
   },
-
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -84,5 +149,39 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     marginLeft: 10,
+  },
+  categoryContainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 15,
+    width: 245,
+    marginLeft: 10,
+    height: 250,
+  },
+  categoryTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#000",
+  },
+  categoryTaskNumber: {
+    fontSize: 18,
+    fontWeight: "500",
+    color: "#000",
+  },
+  slidingContainer: {
+    width: 396,
+    height: 1,
+    top: 249,
+    left: 20,
+    gap: 0,
+    opacity: 0,
+    position: 'absolute',
+  },
+  categoryImage: {
+    width: 100, 
+    height: 100, 
+    marginBottom: 10, 
   },
 });
