@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, FlatList, ScrollView, SectionList } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 const data = [
@@ -41,13 +41,23 @@ const data = [
   },
 ];
 
-const Category = ({ title, taskNumber, categoryImage }) => (
-  <View style={styles.categoryContainer}>
-    <Image source={categoryImage} style={styles.categoryImage} />
-    <Text style={styles.categoryTitle}>{title}</Text>
-    <Text style={styles.categoryTaskNumber}>{taskNumber} tasks</Text>
-  </View>
-);
+const ONGOING_TASKS = [
+  "Mobile App Development",
+  "Learning",
+  "Eating",
+  "Coding",
+  "Studying",
+  "Teaching",
+  "Reading",
+  "Writing",
+  "Exercising",
+  "Walking",
+  "Sleeping",
+  "Watching TV",
+  "Cooking",
+  "Cleaning",
+  "Shopping",
+];
 
 export default function App() {
   const [searchText, setSearchText] = useState('');
@@ -90,11 +100,11 @@ export default function App() {
         <FlatList
           data={data}
           renderItem={({ item }) => (
-            <Category
-              title={item.title}
-              taskNumber={item.tasks}
-              categoryImage={item.categoryImage}
-            />
+            <View style={styles.categoryContainer}>
+              <Image source={item.categoryImage} style={styles.categoryImage} />
+              <Text style={styles.categoryTitle}>{item.title}</Text>
+              <Text style={styles.categoryTaskNumber}>{item.tasks} tasks</Text>
+            </View>
           )}
           keyExtractor={(item) => item.id.toString()}
           horizontal={true}
@@ -104,7 +114,15 @@ export default function App() {
         <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 40 }}>
           Ongoing Tasks
         </Text>
-        
+        <SectionList
+          sections={[{ title: "Ongoing Tasks", data: ONGOING_TASKS }]}
+          keyExtractor={(item, index) => item + index}
+          renderItem={({ item }) => (
+            <View style={styles.ongoingTaskContainer}>
+              <Text style={styles.ongoingTaskTitle}>{item}</Text>
+            </View>
+          )}
+        />
       </View>
     </ScrollView>
   );
@@ -182,5 +200,17 @@ const styles = StyleSheet.create({
     width: 100, 
     height: 100, 
     marginBottom: 10, 
+  },
+  ongoingTaskContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 15,
+    marginBottom: 15,
+    height: 120,
+  },
+  ongoingTaskTitle: {
+    fontSize: 20,
+    color: "#000",
+    marginBottom: 10,
   },
 });
