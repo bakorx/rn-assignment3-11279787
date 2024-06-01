@@ -35,4 +35,4 @@ Displays the device's status bar at the top of the screen, providing essential i
 
 # screenshot of app
 
-![app view screenshot](< >)
+![app view screenshot](< nativeapp/assets/images/screenshot.jpg>)
