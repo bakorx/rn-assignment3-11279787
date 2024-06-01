@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 const data = [
@@ -53,65 +53,73 @@ export default function App() {
   const [searchText, setSearchText] = useState('');
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <View style={styles.headerRow}>
-        <View>
-          <Text style={styles.headerTitle}>Hello, Devs</Text>
-          <Text>14 tasks today</Text>
-        </View>
-        <Image
-          source={require('./assets/images/profile.png')}
-          style={styles.profileImage}
-        />
-      </View>
-      <View style={styles.searchBar}>
-        <Image
-          source={require('./assets/icons/search.png')}
-          style={styles.searchIcon}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Search"
-          value={searchText}
-          onChangeText={setSearchText}
-        />
-        <TouchableOpacity>
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        <View style={styles.headerRow}>
+          <View>
+            <Text style={styles.headerTitle}>Hello, Devs</Text>
+            <Text>14 tasks today</Text>
+          </View>
           <Image
-            source={require('./assets/icons/slider.png')}
-            style={styles.filterIcon}
+            source={require('./assets/images/profile.png')}
+            style={styles.profileImage}
           />
-        </TouchableOpacity>
+        </View>
+        <View style={styles.searchBar}>
+          <Image
+            source={require('./assets/icons/search.png')}
+            style={styles.searchIcon}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Search"
+            value={searchText}
+            onChangeText={setSearchText}
+          />
+          <TouchableOpacity>
+            <Image
+              source={require('./assets/icons/slider.png')}
+              style={styles.filterIcon}
+            />
+          </TouchableOpacity>
+        </View>
+        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 40 }}>
+          Categories
+        </Text>
+        <FlatList
+          data={data}
+          renderItem={({ item }) => (
+            <Category
+              title={item.title}
+              taskNumber={item.tasks}
+              categoryImage={item.categoryImage}
+            />
+          )}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingRight: 16 }}
+        />
+        <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 40 }}>
+          Ongoing Tasks
+        </Text>
+        
       </View>
-      <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 40 }}>
-        Categories
-      </Text>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => (
-          <Category
-            title={item.title}
-            taskNumber={item.tasks}
-            categoryImage={item.categoryImage}
-          />
-        )}
-        keyExtractor={(item) => item.id.toString()}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingRight: 16 }}
-      />
-      {/* Sliding container with specified styles */}
-      <View style={styles.slidingContainer}></View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: '#E8D1BA',
     paddingTop: 50,
     paddingHorizontal: 20,
+    paddingBottom: 20, 
   },
   headerRow: {
     flexDirection: "row",
@@ -169,15 +177,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "500",
     color: "#000",
-  },
-  slidingContainer: {
-    width: 396,
-    height: 1,
-    top: 249,
-    left: 20,
-    gap: 0,
-    opacity: 0,
-    position: 'absolute',
   },
   categoryImage: {
     width: 100, 
