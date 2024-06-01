@@ -19,25 +19,25 @@ const data = [
     id: 3,
     title: "Relax",
     tasks: 8,
-    categoryImage: require("./assets/images/learning.png"),
+    categoryImage: require("./assets/images/relax.png"),
   },
   {
     id: 4,
     title: "Walk",
     tasks: 2,
-    categoryImage: require("./assets/images/learning.png"),
+    categoryImage: require("./assets/images/walk.jpg"),
   },
   {
     id: 5,
     title: "Read",
     tasks: 5,
-    categoryImage: require("./assets/images/learning.png"),
+    categoryImage: require("./assets/images/read.png"),
   },
   {
     id: 6,
     title: "Swim",
     tasks: 1,
-    categoryImage: require("./assets/images/learning.png"),
+    categoryImage: require("./assets/images/swimming.jpg"),
   },
 ];
 
