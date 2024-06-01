@@ -1,9 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
 
 export default function App() {
+  const [searchText, setSearchText] = useState('');
+
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" />
       <View style={styles.headerRow}>
         <View>
           <Text style={styles.headerTitle}>Hello, Devs</Text>
@@ -14,7 +18,24 @@ export default function App() {
           style={styles.profileImage}
         />
       </View>
-      <StatusBar style="auto" />
+      <View style={styles.searchBar}>
+        <Image
+          source={require('./assets/icons/search.png')}
+          style={styles.searchIcon}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Search"
+          value={searchText}
+          onChangeText={setSearchText}
+        />
+        <TouchableOpacity>
+          <Image
+            source={require('./assets/icons/slider.png')}
+            style={styles.filterIcon}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -40,5 +61,28 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28, 
+  },
+
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 10,
+    marginTop: 20,
+  },
+  searchIcon: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+    height: 40,
+  },
+  filterIcon: {
+    width: 20,
+    height: 20,
+    marginLeft: 10,
   },
 });
